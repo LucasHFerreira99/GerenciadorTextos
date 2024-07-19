@@ -1,7 +1,18 @@
+using GerenciadorTextos.Data;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"),
+    Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.38-mysql"));
+}
+);
+
 
 var app = builder.Build();
 

@@ -21,6 +21,23 @@ namespace GerenciadorTextos.Controllers
             return View(documentos);
         }
 
+        public IActionResult CriarDocumento()
+        {
+            return View();
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> CriarDocumento(Documento documentoRecebido)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(documentoRecebido);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(documentoRecebido);
+        }
   
     }
 }

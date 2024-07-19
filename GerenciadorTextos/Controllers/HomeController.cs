@@ -26,8 +26,20 @@ namespace GerenciadorTextos.Controllers
             return View();
         }
 
-        [HttpPost]
+        public async Task<IActionResult> EditarDocumento(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
+            var documento = await _context.Documentos.FirstAsync(x => x.Id == id);
+
+            return View(documento);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CriarDocumento(Documento documentoRecebido)
         {
             if (ModelState.IsValid)
@@ -38,6 +50,26 @@ namespace GerenciadorTextos.Controllers
             }
             return View(documentoRecebido);
         }
-  
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarDocumento(Documento documentoEditado)
+        {
+            if (ModelState.IsValid)
+            {
+                var documento = await _context.Documentos.FirstAsync(x => x.Id == documentoEditado.Id);
+
+                documento.Titulo = documentoEditado.Titulo;
+                documento.Conteudo = documentoEditado.Conteudo;
+                documento.DataAlteracao = DateTime.Now;
+
+                _context.Update(documento);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+
     }
 }

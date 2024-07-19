@@ -38,6 +38,21 @@ namespace GerenciadorTextos.Controllers
             return View(documento);
         }
 
+        public async Task<IActionResult> RemoverDocumento(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+
+            var documento = await _context.Documentos.FirstAsync(x => x.Id == id);
+
+            _context.Remove(documento);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CriarDocumento(Documento documentoRecebido)
@@ -70,6 +85,5 @@ namespace GerenciadorTextos.Controllers
             }
             return View();
         }
-
     }
 }

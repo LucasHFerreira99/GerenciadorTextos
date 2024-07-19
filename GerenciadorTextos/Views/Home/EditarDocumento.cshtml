@@ -13,7 +13,7 @@
             <p>Criação: @Model.DataCriacao.ToString("dd/MM/yyyy HH:mm") - Ultima alteração @Model.DataAlteracao.ToString("dd/MM/yyyy HH:mm")</p>
 
             <div class="form-group mb-3">
-                <textarea asp-for="Conteudo" style="width:68vw; height:60vh " value="Documento sem nome"> </textarea>
+                <textarea id ="tiny" asp-for="Conteudo" style="width:68vw; height:60vh " value="Documento sem nome"> </textarea>
             </div>
 
             <input type="submit" class="btn btn-primary w-100" value="Editar" />
